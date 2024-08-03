@@ -1,0 +1,10 @@
+.car-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin:5%;
+    padding:15%;
+    border: double blue;
+    border-radius: 5%;
+}

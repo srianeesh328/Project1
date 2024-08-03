@@ -16,17 +16,16 @@ import java.util.Optional;
 
 @RestController //makes the class bean, turns all HTTP Response data into JSON
 @RequestMapping("/cars") //all HTTP Requests ending in /cars will come to this Controller
+@CrossOrigin(origins = "*") //allow http from ALL ORIGINS (otherwise you'll get CORS error)
 public class CarController {
 
     //autowire a CarService and a UserDAO (we need methods from both)
     private CarService cs;
-    private UserDAO uDAO; //would be better to go through the UserService for this
     private UserService us;
 
     @Autowired
-    public CarController(CarService cs, UserDAO uDAO, UserService us) {
+    public CarController(CarService cs, UserService us) {
         this.cs = cs;
-        this.uDAO = uDAO;
         this.us = us;
     }
 
