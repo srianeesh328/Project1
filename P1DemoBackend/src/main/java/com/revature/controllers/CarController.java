@@ -16,7 +16,7 @@ import java.util.Optional;
 
 @RestController //makes the class bean, turns all HTTP Response data into JSON
 @RequestMapping("/cars") //all HTTP Requests ending in /cars will come to this Controller
-@CrossOrigin(origins = "*") //allow http from ALL ORIGINS (otherwise you'll get CORS error)
+@CrossOrigin //allow http from ALL ORIGINS (otherwise you'll get CORS error)
 public class CarController {
 
     //autowire a CarService and a UserDAO (we need methods from both)

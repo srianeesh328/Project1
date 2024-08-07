@@ -2,7 +2,7 @@ export interface CarInterface {
     carId?: number,
     make: string,
     model: string,
-    isFourWheelDrive: boolean,
+    fourWheelDrive: boolean,
     userId?: number
 }
 

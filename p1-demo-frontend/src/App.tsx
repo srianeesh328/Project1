@@ -6,6 +6,7 @@ import { Login } from './components/LoginRegister/Login';
 import { Register } from './components/LoginRegister/Register';
 import { Car } from './components/Car/Car';
 import { CarContainer } from './components/Car/CarContainer';
+import 'bootstrap/dist/css/bootstrap.min.css'; // Importing Bootstrap CSS globally
 
 function App() {
   return (

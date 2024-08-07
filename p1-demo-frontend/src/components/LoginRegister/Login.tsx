@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom"
-import "./Login.css"
+import "./Login.css" //TODO: make this css take priority over bootstrap
 import { useState } from "react"
 
 
@@ -24,10 +24,13 @@ export const Login: React.FC = () => {
         } else {
             setUser((user) => ({...user, password:input.target.value}))
         }
+
+        //rememeber the "..." is known as the "spread operator"
+        //it SPREADS across an entire object so we can do things like send a whole object to a child component
+        //or in this case, we're spreading for only the useState hook so we change individual values
  
     }
 
-    
     const login = async () => {
 
         //TODO: gather username and password from state, and send a POST to the java server
