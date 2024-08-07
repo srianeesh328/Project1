@@ -6,6 +6,7 @@ import com.revature.models.DTOs.IncomingCarDTO;
 import com.revature.models.User;
 import com.revature.services.CarService;
 import com.revature.services.UserService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;

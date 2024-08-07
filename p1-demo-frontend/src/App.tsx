@@ -8,6 +8,7 @@ import { Car } from './components/Car/Car';
 import { CarContainer } from './components/Car/CarContainer';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Importing Bootstrap CSS globally
 import { AddCar } from './components/Car/AddCar';
+import { UsersContainer } from './components/User/UsersContainer';
 
 function App() {
   return (
@@ -17,7 +18,8 @@ function App() {
               <Route path="" element={<Login/>}/>
               <Route path="/register" element={<Register/>}/>
               <Route path="/cars" element={<CarContainer/>}/>
-              <Route path="addcar" element={<AddCar/>}/>
+              <Route path="/addcar" element={<AddCar/>}/>
+              <Route path="/users" element={<UsersContainer/>}/>
           </Routes>
       </BrowserRouter>
     </div>

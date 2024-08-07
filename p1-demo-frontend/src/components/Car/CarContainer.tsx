@@ -4,6 +4,7 @@ import { Car } from "./Car"
 import { CarInterface } from "../../interfaces/CarInterface"
 import "./CarContainer.css"
 import { useNavigate } from "react-router-dom"
+import { store } from "../../globalData/store"
 
 
 export const CarContainer: React.FC = () => {
@@ -27,7 +28,7 @@ export const CarContainer: React.FC = () => {
 
         //our GET request 
         //TODO: send withCredentials to confirm the user is logged in)
-        const response = await axios.get("http://localhost:8080/cars")
+        const response = await axios.get("http://localhost:8080/cars/" + store.loggedInUser.userId)
 
         //populate the car state
         setCars(response.data)

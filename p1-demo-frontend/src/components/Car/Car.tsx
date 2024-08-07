@@ -2,6 +2,7 @@ import { Button, Table } from "react-bootstrap"
 import { CarInterface } from "../../interfaces/CarInterface"
 //Note: we took out the CSS import, as we're using bootstrap
 import { useEffect } from "react"
+import { store } from "../../globalData/store"
 
 
 //We're destructuring the cars array as props in a different way here (in the generic)
@@ -17,7 +18,7 @@ export const Car: React.FC<{cars:CarInterface[]}> = ({cars}) => {
     return(
         <div className="container">   
 
-            <h3>Your Cars:</h3>
+            <h3>{store.loggedInUser.username}'s Cars:</h3>
 
             <Table striped bordered hover variant="dark">
                 <thead>
