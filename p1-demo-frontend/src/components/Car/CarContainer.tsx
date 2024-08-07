@@ -5,6 +5,7 @@ import { CarInterface } from "../../interfaces/CarInterface"
 import "./CarContainer.css"
 import { useNavigate } from "react-router-dom"
 
+
 export const CarContainer: React.FC = () => {
 
     //We could have stored a base URL here for cleaner requesting
@@ -38,9 +39,10 @@ export const CarContainer: React.FC = () => {
     return(
         <div className="collection-container">
 
+        {/* These would def look better as a navbar - bootstrap has those! */}
         <div>
             <button onClick={() => navigate("/")}>Back to Login</button>
-            <button>Add New Car</button>
+            <button onClick={() => navigate("/addcar")}>Add New Car</button>
             <button>Profile</button>
         </div>
 

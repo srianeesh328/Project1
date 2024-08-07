@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom"
-import "./Login.css" //TODO: make this css take priority over bootstrap
+import "./Login.css" 
 import { useState } from "react"
 
 

@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController //Makes this class a bean and turns HTTP Response data into JSON (@Controller, @ResponseBody)
 @RequestMapping("/users") //All HTTP Requests ending in /users will go to this controller
+@CrossOrigin //Allows HTTP requests from anywhere
 public class UserController {
 
     private UserService us;

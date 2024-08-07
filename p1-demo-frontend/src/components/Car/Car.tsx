@@ -1,6 +1,6 @@
 import { Button, Table } from "react-bootstrap"
 import { CarInterface } from "../../interfaces/CarInterface"
-import "./Car.css"
+//Note: we took out the CSS import, as we're using bootstrap
 import { useEffect } from "react"
 
 

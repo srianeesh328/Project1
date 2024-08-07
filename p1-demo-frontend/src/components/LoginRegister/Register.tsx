@@ -1,3 +1,4 @@
+import axios from "axios"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 
@@ -36,7 +37,19 @@ export const Register: React.FC = () => {
     //Remember!!!! The @CrossOrigin annotation  
     const register = async () => {
 
-        //TODO: POST REQUEST
+        //TODO: check the the username and password are present
+
+        //POST REQUEST - send this new user info to the backend
+        const response = await axios.post("http://localhost:8080/users", user)
+        .then((response) => {
+            console.log(response.data)
+            alert(response.data.username + " was created!")
+            navigate("/") //send the user back to login after successful register
+        })
+        .catch((error) => {
+            alert("Register failed! Error message: " + error.message)
+            //NOTE: if you send back an error message from the back end, you could use that instead
+        })
 
     }
 
@@ -52,7 +65,7 @@ export const Register: React.FC = () => {
                     <input type="password" placeholder="password" name="password" onChange={storeValues}/>
                 </div>
 
-                <button className="login-button">Submit</button>
+                <button className="login-button" onClick={register}>Submit</button>
                 <button className="login-button" onClick={() => navigate("/")}>Back</button>
 
             </div>
