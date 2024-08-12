@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/auth")
 //set crossorigin to allow origin from localhost:3000, and allow credentials
-@CrossOrigin(origins="http://localhost:3000", allowCredentials = "true")
+@CrossOrigin(origins="http://localhost:3004", allowCredentials = "true")
 public class AuthController {
 
 

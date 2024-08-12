@@ -32,7 +32,7 @@ public class AuthService {
             //if the user is not null (username/password pair match a user)...
 
             //Create an outgoing UserDTO and send it to the Controller
-            OutgoingUserDTO outUser = new OutgoingUserDTO(u.getUserId(), u.getUsername(), u.getRole());
+            OutgoingUserDTO outUser = new OutgoingUserDTO(u.getUserId(), u.getUsername(), u.getRole(), u.getManagerId());
 
             //Initialize the HttpSession sent in from AuthController and give it values
             session.setAttribute("userId", u.getUserId());

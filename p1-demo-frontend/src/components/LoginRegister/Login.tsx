@@ -23,7 +23,8 @@ export const Login: React.FC = () => {
  
         if(input.target.name === "username"){
             setUser((user) => ({...user, username:input.target.value}))
-        } else {
+        }
+        else {
             setUser((user) => ({...user, password:input.target.value}))
         }
 
@@ -54,7 +55,7 @@ export const Login: React.FC = () => {
                 //depending on the user's role value, send them to one of two components
                 if(response.data.role === "user"){
                     //use our useNavigate hook to switch views to the Car Container Component
-                    navigate("/cars")
+                    navigate("/reimbursements")
                 } 
 
                 if(response.data.role === "admin"){
@@ -65,6 +66,7 @@ export const Login: React.FC = () => {
         )
         .catch(
             (error) => {
+                console.error("Login error:", error);
                 alert("Login failed! Try again and do better next time")
             }
         )
@@ -78,8 +80,8 @@ export const Login: React.FC = () => {
     return(
         <div className="login">
             <div className="text-container">
-                <h1>Welcome to the Car Exchange</h1>
-                <h3>Log in to Create and View Cars!</h3>
+                <h1>Welcome to the Employee Reimbursement System</h1>
+                <h3>Log in to Create and View Reimbursements!</h3>
 
                 <div className="input-container">
                     <input type="text" placeholder="username" name="username" onChange={storeValues}/>

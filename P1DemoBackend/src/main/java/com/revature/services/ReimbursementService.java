@@ -1,7 +1,6 @@
 package com.revature.services;
 import com.revature.DAOs.*;
 import com.revature.models.*;
-import jakarta.transaction.Transactional;
 import com.revature.models.DTOs.IncomingReimbursementDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -64,6 +63,36 @@ public class ReimbursementService {
             throw new IllegalArgumentException("UserId cannot be negative");
         }
         return rDAO.findByUser_UserId(userId);
+
+    }
+
+    //This method lets us update a user's username
+    public Reimbursement updateReimbursement(String status, int reimbId){
+
+        //TODO: error handling, check for valid inputs
+
+        //get the User by id (remember this returns an OPTIONAL!)
+        Optional<Reimbursement> existingReimbursement = rDAO.findById(reimbId);
+
+        //Remember, .isPresent() checks the optional to see if there's data or if it's null
+        if(existingReimbursement.isPresent()) {
+
+            //If the User is present, extract it so we can update it
+            Reimbursement r = existingReimbursement.get();
+
+            //update the existing username with the new username
+            r.setStatus(status);
+
+            //save it back to the DB thru the DAO, send back the updated User
+            return rDAO.save(r);
+
+            //NOTE: the .save() method is used for inserts AND updates
+            //How does Spring know to insert vs update? It's based on whether the ID exists or not
+
+        } else {
+            //TODO: probably throw an exception
+            return null;
+        }
 
     }
 

@@ -1,37 +1,45 @@
 package com.revature.controllers;
 
-//Remember, the Controller is where all of our SpringMVC logic sits to handle HTTP requests
-
-import com.revature.models.User;
-import com.revature.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.revature.services.UserService;
+import com.revature.models.*;
 
 import java.util.List;
 
 @RestController //Makes this class a bean and turns HTTP Response data into JSON (@Controller, @ResponseBody)
-@RequestMapping("/users") //All HTTP Requests ending in /users will go to this controller
-@CrossOrigin //Allows HTTP requests from anywhere
+@RequestMapping("/user") //All HTTP Requests ending in /users will go to this controller
+@CrossOrigin
 public class UserController {
 
     private UserService us;
 
-    //UserController depends on UserService (it needs its methods). So let's constructor inject the Service
     @Autowired
-    public UserController(UserService us) {
+    public UserController(UserService us)
+    {
         this.us = us;
     }
 
-    //A method that inserts a new User into the DB
+
+
     @PostMapping //HTTP POST Requests ending in /users will hit this method
     public ResponseEntity<User> registerUser(@RequestBody User newUser){
+        System.out.println("hi");
+        try {
 
-        //TODO: try/catch based on service method exception throws
+            User u = us.registerUser(newUser);
+            return ResponseEntity.status(201).body(u); //send back 201 (Created) and the new User's data
+        }
 
-        User u = us.registerUser(newUser);
+        catch (Exception e)
+        {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
 
-        return ResponseEntity.status(201).body(u); //send back 201 (Created) and the new User's data
+        }
+
 
     }
 
@@ -49,13 +57,13 @@ public class UserController {
     //A method that returns a User by their username
     @GetMapping("/{username}")
     public ResponseEntity<User> getUserByUsername(@PathVariable String username){
-        //One liner for now, might be able to polish this with error handling
+        //One-liner for now, might be able to polish this with error handling
         return ResponseEntity.ok(us.getUserByUsername(username));
     }
 
     //A Method that updates a User's username
     @PatchMapping("/{userId}")
-    public ResponseEntity<Object> updateUsername(@RequestBody String username, @PathVariable int userId){
+    public ResponseEntity<Object> updateUsername(@RequestBody String username, @PathVariable int userId) throws Exception {
 
         //using our rudimentary error handling thanks to Optional in the Service
 
@@ -68,6 +76,15 @@ public class UserController {
             return ResponseEntity.ok(updatedUser);
         }
 
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Integer id) {
+        boolean isRemoved = us.deleteUserById(id);
+        if (!isRemoved) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }

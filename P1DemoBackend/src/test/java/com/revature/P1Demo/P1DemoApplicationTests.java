@@ -90,7 +90,7 @@ class P1DemoApplicationTests {
 
 		//set up some stubbing - placeholder values that our Mocked DAOs will return
 		//remember, we're not testing the DAO, we're testing the service. so fake DAO returns are fine
-		when(mockUserDAO.findById(1)).thenReturn(Optional.of(new User(1, "placeholderUser", "password", "user")));
+		when(mockUserDAO.findById(1)).thenReturn(Optional.of(new User(1, "placeholderUser", "password", "user", 1)));
 		when(mockCarDAO.save(any(Car.class))).thenReturn(returnedCar);
 
 		//call the Service's insertCar method with our newCar object

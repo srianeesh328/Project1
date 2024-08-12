@@ -1,4 +1,4 @@
-package models.DTOs;
+package com.revature.models.DTOs;
 
 public class IncomingReimbursementDTO {
 

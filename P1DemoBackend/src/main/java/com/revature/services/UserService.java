@@ -1,61 +1,69 @@
 package com.revature.services;
-
-import com.revature.DAOs.UserDAO;
-import com.revature.models.User;
+import com.revature.services.*;
+import com.revature.DAOs.*;
+import com.revature.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-@Service //1 of the 4 stereotype annotations. Makes this Class a Bean
+@Service
 public class UserService {
 
-    //define (but not initialize) a UserDAO object
+
     private UserDAO userDAO;
 
-    //How can we get access to the methods of our UserDAO? DEPENDENCY INJECTION!!
     @Autowired
     public UserService(UserDAO userDAO) {
         this.userDAO = userDAO;
     }
 
-    //A method that takes in a User object from the controller, and sends it to the DAO
-    public User registerUser(User newUser){
-
-        //TODO: error handling and other business logic!
-
-        //.save() lets us insert data into the DB. We can also use this for updates.
-        //It also returns the user in question, so we can save it to a variable
-        User u = userDAO.save(newUser);
-
-        return u; //send back to the Controller
-
-        //NOTE: You can definitely just return the method call, I just like to spell it out a bit
+    public User registerUser(User newuser)
+    {
+        User u = userDAO.save(newuser);
+        return u;
 
     }
 
-    //This method gets all users from the UserDAO, and sends it back to the Controller
     public List<User> getAllUsers(){
         return userDAO.findAll();
     }
 
-    //This method gets a user by their username
-    public User getUserByUsername(String username){
+
+    public User getUserByUsername(String username) throws IllegalArgumentException{
 
         //TODO: error handling for user not found, username blank, etc.
 
-        return userDAO.findByUsername(username);
+        User answer = new User();
+        try {
+            answer = userDAO.findByUsername(username);
+        }
+        catch(IllegalArgumentException e)
+        {
+            throw new IllegalArgumentException("Username not found or blank");
+        }
+        return answer;
+
 
     }
 
+
     //This method lets us update a user's username
-    public User updateUser(String newUsername, int userId){
+    public User updateUser(String newUsername, int userId) throws Exception{
 
         //TODO: error handling, check for valid inputs
+        if (newUsername == null)
+        {
+            throw new IllegalArgumentException("Username cannot be null");
+        }
+        if (userId < 0)
+        {
+            throw new IllegalArgumentException("User Id cannot be negative");
+        }
 
         //get the User by id (remember this returns an OPTIONAL!)
-        Optional<User> existingUser = userDAO.findById(userId);
+        Optional<User> existingUser = (userDAO.findById(userId));
 
         //Remember, .isPresent() checks the optional to see if there's data or if it's null
         if(existingUser.isPresent()) {
@@ -66,7 +74,7 @@ public class UserService {
             //update the existing username with the new username
             u.setUsername(newUsername);
 
-            //save it back to the DB thru the DAO, send back the updated User
+            //save it back to the DB through the DAO, send back the updated User
             return userDAO.save(u);
 
             //NOTE: the .save() method is used for inserts AND updates
@@ -78,5 +86,15 @@ public class UserService {
         }
 
     }
+
+    public boolean deleteUserById(int userId) {
+        if (userDAO.existsById(userId)) {
+            userDAO.deleteById(userId);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
 }

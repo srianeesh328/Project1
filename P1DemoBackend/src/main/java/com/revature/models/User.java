@@ -1,58 +1,64 @@
 package com.revature.models;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Entity //This makes a Class a DB table in your Database. (Makes a DB ENTITY)
-@Table(name = "users") //This lets us set attributes like the name of the table
+
+@Entity
+@Table(name = "users")
 @Component //make this class a Bean
+
+
 public class User {
 
-    @Id //This makes the field the Primary Key
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //This makes our PK auto-increment
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int userId;
 
-    //@Column isn't necessary UNLESS you want to set a name or constraints
-    //- nullable: not null constraint
-    //- unique: unique constraint
-    //- columnDefinition: lets you define more complex constraints (like checks)
+    @Column(nullable = false)
+    private String firstName;
 
-    @Column(nullable = false, unique = true, columnDefinition = "text check (length(username) > 5)")
+    @Column(nullable = false)
+    private String lastName;
+
+    @Column(nullable = false)
     private String username;
 
     @Column(nullable = false)
     private String password;
 
-    //We want every new User's role to default to "user" instead "admin"
-    @Column(columnDefinition = "text default 'user'")
+    @Column(columnDefinition = "text default 'employee'")
     private String role;
 
-    /*One to Many relationship (goes hand in hand with the Many to One in the Car Class)
+    @Column(nullable = false)
+    private int managerId;
 
-    mappedBy: This refers to the field in the Car class that maps to this field
-        -We are indicating what the foreign key is in the Car class. (It's the field called user)
 
-    fetch: talked about this in the Car class. Eager loads the reference on app start
-
-    cascade: This is how we specify what operations cascade down to dependent records
-        -CascadeType.ALL: ALL operations cascade down to dependent records (updates/deletes etc.) */
     @JsonIgnore //prevents the circular reference in our JSON responses
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<Car> cars;
+    private List<Reimbursement> reimbursementList;
 
-    //boilerplate code------------------- no args, all args, getter/setter, toString
-
-    public User() {
+    public List<Reimbursement> getReimbursementList() {
+        return reimbursementList;
     }
 
-    public User(int userId, String username, String password, String role) {
+    public void setReimbursementList(List<Reimbursement> reimbursementList) {
+        this.reimbursementList = reimbursementList;
+    }
+
+    public User(){
+    }
+
+    public User(int userId, String firstName, String lastName, String username, String password, String role, int managerId) {
         this.userId = userId;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.username = username;
         this.password = password;
         this.role = role;
+        this.managerId = managerId;
     }
 
     public int getUserId() {
@@ -61,6 +67,22 @@ public class User {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getUsername() {
@@ -79,14 +101,6 @@ public class User {
         this.password = password;
     }
 
-    public List<Car> getCars() {
-        return cars;
-    }
-
-    public void setCars(List<Car> cars) {
-        this.cars = cars;
-    }
-
     public String getRole() {
         return role;
     }
@@ -95,12 +109,11 @@ public class User {
         this.role = role;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "userId=" + userId +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                '}';
+    public int getManagerId() {
+        return managerId;
+    }
+
+    public void setManagerId(int managerId) {
+        this.managerId = managerId;
     }
 }

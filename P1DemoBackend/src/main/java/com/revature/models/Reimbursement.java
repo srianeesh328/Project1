@@ -1,84 +1,69 @@
 package com.revature.models;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 
+
 @Entity
-@Table(name = "cars")
+@Table(name = "reimbursement")
 @Component //make this class a Bean
-public class Car {
+
+public class Reimbursement {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int carId;
 
-    //We could have constraints in the following columns (make, model, 4wD), but I left them out
+    private int reimb_id;
 
-    private String make;
+    private String description;
 
-    private String model;
+    private double amount;
 
-    //TODO: shouldn't have "is" in these boolean variable names
-    private boolean isFourWheelDrive;
+    private String status;
 
-    /*Primary Key Foreign Key relationship! (Many to One relationship)
-
-     fetch - defines whether the dependency (User) is eagerly or lazily loaded
-        -eager: loads the dependency as soon as the app starts
-        -lazy: loads the dependency as soon as it's called for (I've had trouble with this)
-
-    @JoinColumn - defines the column that will be used to join the tables (PK of the User Class)
-        -We have to supply the name of the PK that this FK is referring to.
-        -We use the name of the CLASS field, not the DB column */
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "userId") //reference to the PK in User
+    @JoinColumn(name = "userId")
     private User user;
 
-    //boilerplate code-------------------
+    public Reimbursement(){}
 
-
-    public Car() {
-    }
-
-    public Car(int carId, String make, String model, boolean isFourWheelDrive, User user) {
-        this.carId = carId;
-        this.make = make;
-        this.model = model;
-        this.isFourWheelDrive = isFourWheelDrive;
+    public Reimbursement(int reimb_id, String description, double amount, String status, User user) {
+        this.reimb_id = reimb_id;
+        this.description = description;
+        this.amount = amount;
+        this.status = status;
         this.user = user;
     }
 
-    public int getCarId() {
-        return carId;
+    public int getReimb_id() {
+        return reimb_id;
     }
 
-    public void setCarId(int carId) {
-        this.carId = carId;
+    public void setReimb_id(int reimb_id) {
+        this.reimb_id = reimb_id;
     }
 
-    public String getMake() {
-        return make;
+    public String getDescription() {
+        return description;
     }
 
-    public void setMake(String make) {
-        this.make = make;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getModel() {
-        return model;
+    public double getAmount() {
+        return amount;
     }
 
-    public void setModel(String model) {
-        this.model = model;
+    public void setAmount(double amount) {
+        this.amount = amount;
     }
 
-    public boolean isFourWheelDrive() {
-        return isFourWheelDrive;
+    public String getStatus() {
+        return status;
     }
 
-    public void setFourWheelDrive(boolean fourWheelDrive) {
-        isFourWheelDrive = fourWheelDrive;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public User getUser() {
@@ -87,16 +72,5 @@ public class Car {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    @Override
-    public String toString() {
-        return "Car{" +
-                "carId=" + carId +
-                ", make='" + make + '\'' +
-                ", model='" + model + '\'' +
-                ", isFourWheelDrive=" + isFourWheelDrive +
-                ", user=" + user +
-                '}';
     }
 }

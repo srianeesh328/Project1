@@ -8,16 +8,18 @@ public class OutgoingUserDTO {
     private int userId;
     private String username;
     private String role;
+    private int manager_id;
 
     //boilerplate--------------/
 
     public OutgoingUserDTO() {
     }
 
-    public OutgoingUserDTO(int userId, String username, String role) {
+    public OutgoingUserDTO(int userId, String username, String role, int manager_id) {
         this.userId = userId;
         this.username = username;
         this.role = role;
+        this.manager_id = manager_id;
     }
 
     public int getUserId() {
@@ -44,12 +46,21 @@ public class OutgoingUserDTO {
         this.role = role;
     }
 
+    public int getManager_id() {
+        return manager_id;
+    }
+
+    public void setManager_id(int manager_id) {
+        this.manager_id = manager_id;
+    }
+
     @Override
     public String toString() {
         return "OutgoingUserDTO{" +
                 "userId=" + userId +
                 ", username='" + username + '\'' +
                 ", role='" + role + '\'' +
+                ", manager_id=" + manager_id +
                 '}';
     }
 }
